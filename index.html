@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SMA Negeri 5 Kupang - Pengumuman Kelulusan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/kelulusan.css">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+<body class="h-full bg-slate-950 text-white bg-pattern overflow-auto">
+  <!-- Admin Panel Toggle Button -->
+  <button id="adminToggle" class="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 hover:border-slate-600 flex items-center justify-center transition-all duration-300 group" title="Admin Panel">
+    <i data-lucide="settings" class="w-5 h-5 text-slate-400 group-hover:text-yellow-500"></i>
+  </button>
+
+  <!-- Login Page -->
+  <div id="loginPage" class="min-h-full flex flex-col items-center justify-center px-4 py-10">
+    <div class="w-full max-w-md">
+      <!-- School Header Area -->
+      <div class="text-center mb-8 animate-fade-up">
+        <img 
+    src="assets/img/logo.png" 
+    alt="Logo Sekolah" 
+    class="w-20 h-20 mx-auto mb-4 object-contain"
+  >
+        <p class="text-yellow-500/70 text-sm font-semibold tracking-[0.3em] uppercase mb-1">Pengumuman Resmi</p>
+        <h1 class="font-display text-3xl md:text-4xl font-bold gold-shimmer leading-tight" id="titleText">Kelulusan Murid</h1>
+        <div class="ornament-line w-48 mx-auto mt-3 mb-3"></div>
+        <p class="text-slate-400 text-base" id="schoolText">SMA Negeri 5 Kupang</p>
+        <p class="text-slate-500 text-sm" id="yearText">Tahun Pelajaran 2025/2026</p>
+      </div>
+      <div class="login-card rounded-2xl p-8 animate-fade-up delay-2">
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-yellow-500/10 flex items-center justify-center">
+            <i class="w-6 h-6 text-yellow-500" data-lucide="key-round"></i>
+          </div>
+          <h2 class="text-lg font-bold text-white">Masukkan NISN Anda</h2>
+          <p class="text-slate-400 text-sm mt-1">Nomor Induk Siswa Nasional (10 digit)</p>
+        </div>
+        <form id="loginForm" onsubmit="return false;">
+          <label for="nisnInput" class="sr-only">NISN</label>
+          <input id="nisnInput" type="text" maxlength="10" inputmode="numeric" placeholder="Contoh: 0088035499" class="input-field w-full rounded-xl px-4 py-3.5 text-center text-lg tracking-[0.15em] text-white placeholder-slate-500 mb-3" autocomplete="off">
+          <div id="errorMsg" class="text-red-400 text-sm text-center mb-3 hidden">
+            <i data-lucide="alert-circle" class="w-4 h-4 inline-block mr-1 align-text-bottom"></i>
+            <span id="errorText"></span>
+          </div>
+          <button id="checkBtn" type="submit" class="btn-gold w-full rounded-xl py-3.5 text-base font-bold tracking-wide flex items-center justify-center gap-2">
+            <i data-lucide="search" class="w-5 h-5"></i> Cek Kelulusan
+          </button>
+        </form>
+      </div>
+      <p class="text-center text-slate-600 text-xs mt-6 animate-fade-up delay-3">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 inline-block mr-1 align-text-bottom"></i>
+        Data bersifat rahasia dan hanya dapat diakses oleh siswa yang bersangkutan
+      </p>
+    </div>
+  </div>
+
+  <!-- Result Page -->
+  <div id="resultPage" class="min-h-full flex flex-col items-center justify-center px-4 py-10 hidden">
+    <div class="w-full max-w-lg">
+      <div class="result-card rounded-2xl p-8 md:p-10 text-center relative overflow-hidden">
+        <!-- Decorative corners -->
+        <div class="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-yellow-500/30 rounded-tl-2xl"></div>
+        <div class="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-yellow-500/30 rounded-tr-2xl"></div>
+        <div class="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-yellow-500/30 rounded-bl-2xl"></div>
+        <div class="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-yellow-500/30 rounded-br-2xl"></div>
+        <p class="text-yellow-500/60 text-xs font-semibold tracking-[0.3em] uppercase mb-2 animate-fade-up" id="resultSchoolLabel">SMA Negeri 5 Kupang</p>
+        <div class="ornament-line w-32 mx-auto mb-6 animate-fade-up delay-1"></div>
+        <!-- Graduation icon -->
+        <div class="animate-scale-in delay-1">
+          <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/30">
+            <svg width="52" height="52" viewBox="0 0 52 52" fill="white">
+              <path d="M26 8L4 20l22 12 18-9.8V34h4V20L26 8z" />
+              <path d="M10 23.4V34c0 2 4 7 16 7s16-5 16-7V23.4L26 32 10 23.4z" opacity="0.85" />
+            </svg>
+          </div>
+        </div>
+        <p class="text-slate-400 text-sm mb-1 animate-fade-up delay-2">Dengan ini dinyatakan bahwa:</p>
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white mt-2 mb-1 animate-fade-up delay-2" id="resultName">-</h2>
+        <p class="text-yellow-500/80 text-sm tracking-wider animate-fade-up delay-2">NISN: <span id="resultNISN">-</span></p>
+        <div class="my-6 animate-fade-up delay-3">
+          <div class="stamp-lulus font-display font-extrabold inline-block border-double rounded-lg">LULUS</div>
+        </div>
+        <p class="text-slate-400 text-sm animate-fade-up delay-4" id="resultYearLabel">Tahun Pelajaran 2025/2026</p>
+        <div class="ornament-line w-32 mx-auto mt-6 mb-4 animate-fade-up delay-4"></div>
+        <p class="text-emerald-400 text-sm font-semibold animate-fade-up delay-5">🎉 Selamat atas kelulusanmu! Sukses selalu di masa depan.</p>
+        <!-- Disclaimer -->
+        <div class="mt-5 bg-slate-900/60 border border-slate-800 rounded-xl p-4 animate-fade-up delay-5">
+          <p class="text-slate-400 text-xs leading-relaxed text-center">
+            <i data-lucide="info" class="w-3.5 h-3.5 inline-block mr-1 align-text-bottom text-yellow-500/60"></i>
+            <em>Jika ada perbedaan hasil pengumuman online dan manual, maka yang menjadi acuan adalah dokumen kelulusan yang telah disahkan dan ditandatangani oleh Kepala Sekolah.</em>
+          </p>
+        </div>
+        <button id="backBtn" class="mt-5 w-full py-3 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:border-yellow-500/40 transition-all text-sm flex items-center justify-center gap-2 animate-fade-up delay-5">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Halaman NISN
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App scripts -->
+  <script src="assets/js/studentData.js"></script>
+  <script src="assets/js/summary.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/confetti.js"></script>
+  <script src="assets/js/loginForm.js"></script>
+  <script src="assets/js/adminPanel.js"></script>
+  <script src="assets/js/dataSdk.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Cloudflare Script Protection (jika dibutuhkan, tidak wajib)
+    (function(){
+      function c(){
+        var b = a.contentDocument || a.contentWindow.document;
+        if(b){
+          var d = b.createElement('script');
+          d.innerHTML = "window.__CF$cv$params={r:'9f3d251c8749fce6',t:'MTc3NzQ1MzUyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+          b.getElementsByTagName('head')[0].appendChild(d);
+        }
+      }
+      if(document.body){
+        var a = document.createElement('iframe');
+        a.height = 1; a.width = 1;
+        a.style.position = 'absolute';
+        a.style.top = 0; a.style.left = 0;
+        a.style.border = 'none';
+        a.style.visibility = 'hidden';
+        document.body.appendChild(a);
+        if('loading' !== document.readyState) c();
+        else if(window.addEventListener) document.addEventListener('DOMContentLoaded',c);
+        else {
+          var e = document.onreadystatechange||function(){};
+          document.onreadystatechange = function(b) {
+            e(b);
+            'loading' !== document.readyState && (document.onreadystatechange = e, c());
+          }
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
